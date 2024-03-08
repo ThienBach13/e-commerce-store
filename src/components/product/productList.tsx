@@ -161,7 +161,7 @@ const ProductList = () => {
           sx={{
             display: "grid",
             gridTemplateColumns: getGridTemplateColumns(),
-            gap: 2,
+            gap: isExtraSmallScreen ? "15px" : 2,
             margin: "10px",
           }}
         >
@@ -176,7 +176,7 @@ const ProductList = () => {
                   component="img"
                   alt="Product Images"
                   image={product.images[1]}
-                  sx={{ width: "100%", height: "auto", display: "block" }} // Maintain aspect ratio
+                  sx={{ width: "100%", height: "auto", display: "block" }}
                 />
                 <Typography variant="h6">{product.title}</Typography>
                 <Typography variant="body1">€{product.price}</Typography>
