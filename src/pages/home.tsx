@@ -1,9 +1,9 @@
-import CategoriesList from "../components/category/categoriesList";
+import Footer from "../components/footer/footer";
 
 const Home = () => {
   return (
     <div>
-      <CategoriesList></CategoriesList>
+      <Footer />
     </div>
   );
 };

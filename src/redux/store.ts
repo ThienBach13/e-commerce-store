@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import productSlice from "./slices/productSlice";
 import categorySlice from "./slices/categorySlice";
-import userSlice from "./slices/userSlice";
 import cartSlice from "./slices/cartSlice";
+import userSlice from "./slices/userSlice";
 
 const store = configureStore({
   reducer: {

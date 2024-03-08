@@ -13,14 +13,32 @@ export type ProductType = {
   category: CategoryType;
 };
 
-export type UserRegister = {
-  name: string;
+export interface CreateProductType {
+  title: string;
+  price: number | null;
+  description: string;
+  categoryId: number;
+  images: string[];
+}
+
+export interface UpdateProductType {
+  title?: string;
+  price?: number;
+  description?: string;
+  images?: string[];
+}
+
+export interface UserCredential {
   email: string;
   password: string;
+}
+
+export type UserRegister = UserCredential & {
+  name: string;
   avatar: string;
 };
 
-export type UserType = UserRegister & {
+export type User = UserRegister & {
   role: "customer" | "admin";
   id: number;
 };
@@ -28,3 +46,10 @@ export type UserType = UserRegister & {
 export type CartItemType = ProductType & {
   quantity: number;
 };
+
+export type UpdateQuantity = {
+  id: number;
+  quantity: number;
+};
+
+export type Sort = "Default" | "Highest Price" | "Lowest Price";

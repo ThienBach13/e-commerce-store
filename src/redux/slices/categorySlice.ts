@@ -1,17 +1,16 @@
-import axios from "axios";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
-import { RootState } from "../store";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CategoryType } from "../../misc/types";
+import axios, { AxiosError } from "axios";
 
-interface CategoryState {
-  allCategories: CategoryType[];
+type InitialState = {
+  categories: CategoryType[];
+  selectedCategory: number;
   loading: boolean;
   error?: string;
-}
-
-const initialState: CategoryState = {
-  allCategories: [],
+};
+const initialState: InitialState = {
+  categories: [],
+  selectedCategory: 0,
   loading: false,
 };
 
@@ -19,12 +18,14 @@ export const fetchAllCategoriesAsync = createAsyncThunk(
   "fetchAllCategoriesAsync",
   async () => {
     try {
-      const res = await axios(`https://api.escuelajs.co/api/v1/categories`);
+      const res = await axios.get<CategoryType[]>(
+        `https://api.escuelajs.co/api/v1/categories`
+      );
       const data = res.data;
       return data;
     } catch (e) {
-      const error = e as Error;
-      return error;
+      const error = e as AxiosError;
+      throw error;
     }
   }
 );
@@ -32,13 +33,21 @@ export const fetchAllCategoriesAsync = createAsyncThunk(
 const categorySlice = createSlice({
   name: "categories",
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectedCategory: (state, action: PayloadAction<number>) => {
+      state.selectedCategory = action.payload;
+    },
+  },
   extraReducers(builder) {
+    // fetchCategoriesAsync
     builder.addCase(fetchAllCategoriesAsync.fulfilled, (state, action) => {
       if (!(action.payload instanceof Error)) {
-        state.allCategories = action.payload;
-        state.loading = false;
+        state.categories = [
+          { id: 0, name: "All", image: "https://i.imgur.com/cLBhSOG.png" },
+          ...action.payload,
+        ];
       }
+      state.loading = false;
     });
     builder.addCase(fetchAllCategoriesAsync.pending, (state) => {
       state.loading = true;
@@ -52,7 +61,6 @@ const categorySlice = createSlice({
   },
 });
 
-export const selectCategories = (state: RootState) =>
-  state.products.allProducts;
+export const { setSelectedCategory } = categorySlice.actions;
 
 export default categorySlice.reducer;
