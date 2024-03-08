@@ -17,6 +17,7 @@ import Register from "./pages/userRegister";
 import Profile from "./pages/userProfile";
 import Box from "@mui/material/Box";
 import Footer from "./components/footer/footer";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const authenticate = useSelector(
