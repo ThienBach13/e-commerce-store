@@ -1,50 +1,123 @@
-# Frontend project
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/6764957/52892445-9045cf80-3136-11e9-9d5e-a1c47e505372.png" width="100" alt="project-logo">
+</p>
+<p align="center">
+    <h1 align="center">fs17-Frontend-project E-Commerce Project</h1>
+</p>
+<p align="center"> <em>Developed with the software and tools below.</em>
+</p>
+<p align="center">
+<img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
+<img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white" alt="Redux">
+<img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
+<img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white" alt="React Router">
+<img src="https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white" alt="MUI"><img src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white" alt="Jest">
+</p>
 
-This repository for the Frontend project to build an e-commerce website.
+## General Description
 
-## Requirements
+The application, using React TS and Redux Toolkit, creates a a fully functional e-commerce store.
 
-### Basic requirements
+Deployment link: https://master--thien-e-commerce-store.netlify.app/
 
-The Front end project must use TypeScript and Redux toolkit.
+## Table of content
 
-1. Use the API endpoint `https://fakeapi.platzi.com/`.
+[API Reference](#api-reference)
 
-2. Create at lease 4 pages (can be more if you want): Page for all products, product page, profile page (only available if user logins), and cart page (cart page could be a page or a modal)
+[Install](#install)
 
-3. Create Redux store for following features:
+[Features](#features)
 
-   - product reducer: get all products, find a single products, filter products by categories, sort products by price. Create, update and delete a product (enable update & delete features only for admin of the webapp)
-   - user reducer: register and login
-   - cart reducer: add product to cart, remove products, update products's quantity in cart
+[Package used](#package-used)
 
-4. When adding routers to your application, set certain routes to be private. For example, route to user profile page should not be accessible if user has not logged in.
+## API Reference
 
-5. Styling: must have responsive
+In this project, [Platzi API](https://fakeapi.platzi.com/) is used API resource.
 
-6. Implement unit testing for the reducers
+## Install
 
-7. **Deploy** the application and rewrite README file.
+1. Clone the repository:
 
-### Additional features:
+```sh
+git clone https://github.com/ThienBach13/e-commerce-store
+```
 
-- Use Context API to switch theme
-- Use pagination when fetching/displaying all the products
-- Implement performance optimization where applicable
+2. Install all the packages and dependencies:
 
-## Grading (1-5)
+```sh
+npm install
+```
 
-1: Late submission or not complete basic requirements
+3. Start the application:
 
-2: Basic requirement + Presentation
+```sh
+npm start
+```
 
-3: Folder structure + follow convention(naming convention ,loading, error) + some additional features
+## Features
 
-4: All additional features + reusable logic + custom hook
+- **Page Development:**
 
-5: UI-UX (for example: send alert when user add same product) + styling (animation or transition, scroll to top) + advanced feature (google log in)
+  - Create at least four pages:
+    - All Products
+    - Product Details
+    - Profile (requires user login)
+    - Cart (can be a separate page or modal)
 
-## Deadline
+- **Redux Store Implementation:**
 
-- Presentation: **7/3** and **8/3/ 2024**
-- Submitting Front-end project **10am 8/3/2024**
+  - Manage state with Redux, including:
+    - Product retrieval
+    - Product creation, updating, and deletion (admin-exclusive)
+
+- **Authentication Handling:**
+
+  - Secure routes to private areas:
+    - User profile page accessible only upon login
+
+- **Responsive Design:**
+
+  - Ensure responsive layout for diverse device compatibility.
+
+- **Unit Testing:**
+
+  - Conduct unit tests for reducers to ensure reliability.
+
+- **Deployment:**
+
+  - Deploy the application and update README documentation accordingly.
+
+- **Pagination:**
+  - Implement pagination for efficient handling of large datasets.
+
+## Package used
+
+<pre>
+"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+"@emotion/react": "^11.11.4",
+"@emotion/styled": "^11.11.0",
+"@mui/icons-material": "^5.15.11",
+"@mui/material": "^5.15.12",
+"@reduxjs/toolkit": "^2.2.1",
+"@testing-library/jest-dom": "^5.17.0",
+"@testing-library/react": "^13.4.0",
+"@testing-library/user-event": "^13.5.0",
+"@types/jest": "^27.5.2",
+"@types/node": "^16.18.80",
+"@types/react": "^18.2.55",
+"@types/react-dom": "^18.2.19",
+"axios": "^1.6.7",
+"formik": "^2.4.5",
+"lodash": "^4.17.21",
+"react": "^18.2.0",
+"react-dom": "^18.2.0",
+"react-hook-form": "^7.51.0",
+"react-redux": "^9.1.0",
+"react-router": "^6.22.1",
+"react-router-dom": "^6.22.2",
+"react-scripts": "^5.0.1",
+"react-toastify": "^10.0.4",
+"typescript": "^4.9.5",
+"web-vitals": "^2.1.4",
+"yup": "^1.4.0"
+</pre>
