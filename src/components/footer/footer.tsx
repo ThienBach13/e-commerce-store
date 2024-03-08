@@ -1,6 +1,6 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
+
 import Box from "@mui/material/Box";
 
 const Footer = () => {
@@ -22,19 +22,6 @@ const Footer = () => {
       </Typography>
     </Box>
   );
-};
-
-const styles = {
-  footer: {
-    backgroundColor: "#333",
-    color: "#fff",
-    textAlign: "center",
-    padding: "1rem",
-    position: "fixed",
-    left: 0,
-    bottom: 0,
-    width: "100%",
-  } as React.CSSProperties,
 };
 
 export default Footer;
