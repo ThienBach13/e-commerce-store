@@ -19,7 +19,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 
 interface CategoriesListProps {
-  handleCategoryChange: (categoryId: number) => void;
+  handleCategoryChange: (categoryId: string) => void;
 }
 
 const CategoriesList: React.FC<CategoriesListProps> = ({
@@ -28,12 +28,13 @@ const CategoriesList: React.FC<CategoriesListProps> = ({
   const categories = useSelector(
     (state: RootState) => state.categories.categories
   );
+
   const dispatch = useAppDispatch();
   const categoryDispatch = useDispatch();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const handleCategory = (category: number) => {
+  const handleCategory = (category: string) => {
     categoryDispatch(setSelectedCategory(category));
     handleCategoryChange(category); // Call the handleCategoryChange prop with the selected category
   };
@@ -56,8 +57,8 @@ const CategoriesList: React.FC<CategoriesListProps> = ({
         <Select
           labelId="category-select-label"
           id="category-select"
-          onChange={(e) => handleCategory(Number(e.target.value))}
-          defaultValue={0}
+          onChange={(e) => handleCategory(e.target.value)}
+          defaultValue={"0"}
         >
           {categories.map((category) => (
             <MenuItem key={category.id} value={category.id}>

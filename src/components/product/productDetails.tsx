@@ -15,15 +15,20 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 const ProductDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string | undefined }>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const cartDispatch = useDispatch();
   const product = useAppSelector((state: RootState) => state.products.product);
+  const categories = useAppSelector(
+    (state: RootState) => state.categories.categories
+  );
   const user = useAppSelector((state: RootState) => state.users.user);
 
   useEffect(() => {
-    dispatch(fetchSingleProductAsync(Number(id)));
+    if (id !== undefined) {
+      dispatch(fetchSingleProductAsync(id));
+    }
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -36,6 +41,10 @@ const ProductDetail: React.FC = () => {
   const handleAddToCart = (product: ProductType) => {
     cartDispatch(saveToCart(product));
   };
+
+  const categoryName =
+    categories.find((category) => category.id === product?.categoryId)?.name ||
+    "Unknown";
 
   return (
     <Box
@@ -56,12 +65,15 @@ const ProductDetail: React.FC = () => {
           }}
         >
           <Box sx={{ flex: 1, marginBottom: { xs: 2, md: 0 } }}>
-            <img
-              src={product.images[0]}
-              alt="Product Images"
-              style={{ maxWidth: "100%", borderRadius: "8px" }}
-            />
-            {user && user.role === "admin" && (
+            {product.images &&
+              product.images[0] && ( // Check if images exist
+                <img
+                  src={product.images[0]}
+                  alt="Product Images"
+                  style={{ maxWidth: "100%", borderRadius: "8px" }}
+                />
+              )}
+            {user && user.role === "Admin" && (
               <Box
                 sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}
               >
@@ -81,7 +93,7 @@ const ProductDetail: React.FC = () => {
               sx={{ fontWeight: "bold", color: "#333" }}
             >
               <Typography component="span" sx={{ fontWeight: "normal" }}>
-                {product.title}
+                {product.name}
               </Typography>
             </Typography>
             <Typography
@@ -101,7 +113,7 @@ const ProductDetail: React.FC = () => {
             >
               Category:{" "}
               <Typography component="span" sx={{ fontWeight: "normal" }}>
-                {product.category.name}
+                {categoryName}
               </Typography>
             </Typography>
             <Typography

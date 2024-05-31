@@ -21,7 +21,7 @@ import { UpdateProductType } from "../../misc/types";
 
 const UpdateProduct = () => {
   const dispatch = useAppDispatch();
-  const { id } = useParams(); // Getting the product ID from the URL params
+  const { id } = useParams<{ id: string | undefined }>(); // Getting the product ID from the URL params
   const loading = useSelector((state: RootState) => state.products.loading); // Fetching loading state from Redux store
   const error = useSelector((state: RootState) => state.products.error); // Fetching error state from Redux store
   const product = useSelector((state: RootState) => state.products.product); // Fetching product data from Redux store
@@ -30,12 +30,12 @@ const UpdateProduct = () => {
   // Formik form setup
   const formik = useFormik({
     initialValues: {
-      title: product?.title,
+      name: product?.name,
       price: product?.price,
       description: product?.description,
     },
     validationSchema: Yup.object({
-      title: Yup.string().required("Required"),
+      name: Yup.string().required("Required"),
       price: Yup.number()
         .positive("Price must be a positive number")
         .required("Required"),
@@ -44,12 +44,12 @@ const UpdateProduct = () => {
     onSubmit: async (data: UpdateProductType, { resetForm }) => {
       const modifiedData = {
         updateProduct: data,
-        productId: Number(id),
+        productId: id as string,
       };
       try {
         // Dispatching async actions to update product and fetch updated product data
         await dispatch(updateProductAsync(modifiedData));
-        await dispatch(fetchSingleProductAsync(Number(id)));
+        await dispatch(fetchSingleProductAsync(id as string));
       } catch (error) {
         return error; // Returning error if any
       }
@@ -139,17 +139,17 @@ const UpdateProduct = () => {
               sx={{ marginBottom: 1, width: "300px" }}
             />
             <TextField
-              id="title"
-              name="title"
-              label="Title"
+              id="name"
+              name="name"
+              label="Name"
               type="text"
-              value={formik.values.title}
+              value={formik.values.name}
               onChange={formik.handleChange}
               placeholder="Enter the product name"
               variant="outlined"
               margin="normal"
-              error={formik.touched.title && Boolean(formik.errors.title)}
-              helperText={formik.touched.title && formik.errors.title}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
               sx={{ marginBottom: 1, width: "300px" }}
             />
             <TextField

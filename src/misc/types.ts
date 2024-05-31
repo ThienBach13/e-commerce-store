@@ -1,28 +1,28 @@
 export type CategoryType = {
-  id: number;
+  id: string;
   name: string;
   image: string;
 };
 
 export type ProductType = {
-  id: number;
-  title: string;
+  id: string;
+  name: string;
   price: number;
   description: string;
   images: string[];
-  category: CategoryType;
+  categoryId: string;
 };
 
 export interface CreateProductType {
-  title: string;
-  price: number | null;
+  name: string;
   description: string;
-  categoryId: number;
+  price: number | null;
+  categoryId: string;
   images: string[];
 }
 
 export interface UpdateProductType {
-  title?: string;
+  name?: string;
   price?: number;
   description?: string;
   images?: string[];
@@ -39,8 +39,8 @@ export type UserRegister = UserCredential & {
 };
 
 export type User = UserRegister & {
-  role: "customer" | "admin";
-  id: number;
+  role: "Customer" | "Admin";
+  id: string;
 };
 
 export type CartItemType = ProductType & {
@@ -48,8 +48,19 @@ export type CartItemType = ProductType & {
 };
 
 export type UpdateQuantity = {
-  id: number;
+  id: string;
   quantity: number;
+};
+
+export type Order = {
+  id: string;
+  CreatedAt: Date;
+  orderItems: [OrderItem];
+};
+export type OrderItem = {
+  productId: string;
+  quantity: number;
+  price: number;
 };
 
 export type Sort = "Default" | "Highest Price" | "Lowest Price";

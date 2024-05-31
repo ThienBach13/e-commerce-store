@@ -4,9 +4,13 @@ import { toast } from "react-toastify";
 
 import { User, UserCredential, UserRegister } from "../../misc/types";
 
-const userUrl = "https://api.escuelajs.co/api/v1/users";
-const loginUrl = "https://api.escuelajs.co/api/v1/auth/login";
-const ProfileUrl = "https://api.escuelajs.co/api/v1/auth/profile";
+// const userUrl = "https://api.escuelajs.co/api/v1/users";
+// const loginUrl = "https://api.escuelajs.co/api/v1/auth/login";
+// const ProfileUrl = "https://api.escuelajs.co/api/v1/auth/profile";
+
+const userUrl = "https://ecomshop.azurewebsites.net/api/v1/auth/register";
+const loginUrl = "https://ecomshop.azurewebsites.net/api/v1/auth/login";
+const ProfileUrl = "https://ecomshop.azurewebsites.net/api/v1/auth/profile";
 
 const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
 
@@ -54,6 +58,7 @@ export const authenticateUserAsync = createAsyncThunk(
           Authorization: `Bearer ${access_token}`,
         },
       });
+      console.log(authentication);
       return authentication.data;
     } catch (e) {
       const error = e as AxiosError;
@@ -66,19 +71,17 @@ export const loginUserAsync = createAsyncThunk(
   "loginUserAsync",
   async (userCredential: UserCredential, { dispatch }) => {
     try {
-      const response = await axios.post<{ access_token: string }>(
-        loginUrl,
-        userCredential
-      );
+      const response = await axios.post<string>(loginUrl, userCredential);
+      const access_token = response.data;
       toast.success("Login successfully!", {
         position: "top-right",
         autoClose: 2000,
       });
       localStorage.setItem("isAuthenticated", "true");
-      localStorage.setItem("access_token", response.data.access_token);
+      localStorage.setItem("access_token", access_token);
 
       const authentication = await dispatch(
-        authenticateUserAsync(response.data.access_token)
+        authenticateUserAsync(access_token)
       );
       return authentication.payload as User;
     } catch (e) {

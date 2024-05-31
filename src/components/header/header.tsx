@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../redux/store";
+import { RootState, useAppSelector } from "../../redux/store";
 import { logout } from "../../redux/slices/userSlice";
 import { Link as RouterLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -26,6 +27,7 @@ const Header = () => {
   const authenticate = useSelector(
     (state: RootState) => state.users.isAuthenticated
   );
+  const user = useAppSelector((state: RootState) => state.users.user);
   const dispatch = useDispatch();
 
   // Calculate total number of items in the cart
@@ -33,6 +35,7 @@ const Header = () => {
     (total, currentItem) => total + currentItem.quantity,
     0
   );
+  const navigate = useNavigate();
 
   // State for menu anchor elements
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -55,6 +58,7 @@ const Header = () => {
   // Handle user logout
   const handleLogout = () => {
     dispatch(logout());
+    navigate("/login");
   };
 
   return (
@@ -232,7 +236,7 @@ const Header = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {/* User menu options */}
+              {/* User menu options
               {authenticate ? (
                 // If user is authenticated
                 <div>
@@ -244,6 +248,69 @@ const Header = () => {
                     <MenuItem>Profile</MenuItem>
                   </Link>
                   <MenuItem onClick={handleLogout}>Log Out</MenuItem>
+                </div>
+              ) : (
+                // If user is not authenticated
+                <div>
+                  <Link
+                    component={RouterLink}
+                    to="/login"
+                    sx={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <MenuItem>Log In</MenuItem>
+                  </Link>
+                  <Link
+                    component={RouterLink}
+                    to="/register"
+                    sx={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <MenuItem>Register</MenuItem>
+                  </Link>
+                </div>
+              )} */}
+              {/* User menu options */}
+              {authenticate ? (
+                // If user is authenticated
+                <div>
+                  {/* Check if user is admin */}
+                  {user && user.role === "Admin" ? (
+                    <div>
+                      <Link
+                        component={RouterLink}
+                        to="/profile"
+                        sx={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        <MenuItem>Profile admin</MenuItem>
+                      </Link>
+                      <Link
+                        component={RouterLink}
+                        to="/adminOrder"
+                        sx={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        <MenuItem>Manage Orders</MenuItem>
+                      </Link>
+                      <MenuItem onClick={handleLogout}>Log Out</MenuItem>
+                    </div>
+                  ) : (
+                    // If user is not admin
+                    <div>
+                      <Link
+                        component={RouterLink}
+                        to="/profile"
+                        sx={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        <MenuItem>Profile User</MenuItem>
+                      </Link>
+                      <Link
+                        component={RouterLink}
+                        to="/userOrder"
+                        sx={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        <MenuItem>My order</MenuItem>
+                      </Link>
+                      <MenuItem onClick={handleLogout}>Log Out</MenuItem>
+                    </div>
+                  )}
                 </div>
               ) : (
                 // If user is not authenticated

@@ -26,7 +26,7 @@ import { useTheme } from "@mui/material/styles";
 const ProductList = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedSort, setSelectedSort] = useState<Sort>("Default");
-  const [selectedCategory, setSelectedCategory] = useState<number>(0); // Initially set to show all products
+  const [selectedCategory, setSelectedCategory] = useState<string>("0");
   const open = Boolean(anchorEl);
   const theme = useTheme();
   const isExtraSmallScreen = useMediaQuery(theme.breakpoints.down("xs"));
@@ -62,29 +62,6 @@ const ProductList = () => {
     setPage(value);
   };
 
-  let filteredProducts =
-    selectedCategory === 0
-      ? allProducts
-      : allProducts.filter(
-          (product) => product.category.id === selectedCategory
-        );
-
-  let sortProducts =
-    selectedSort === "Default"
-      ? filteredProducts
-      : selectedSort === "Highest Price"
-      ? sortByHighest(filteredProducts, "price")
-      : sortByLowest(filteredProducts, "price");
-
-  useEffect(() => {
-    // Ensure that the current page is within valid bounds
-    if (page < 1) {
-      setPage(1);
-    } else if (page > Math.ceil(filteredProducts.length / productsPerPage)) {
-      setPage(Math.ceil(filteredProducts.length / productsPerPage));
-    }
-  }, [page, filteredProducts.length, productsPerPage]);
-
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -100,10 +77,35 @@ const ProductList = () => {
     return "repeat(4, 1fr)";
   };
 
+  let filteredProducts =
+    selectedCategory === "0"
+      ? allProducts
+      : allProducts.filter(
+          (product) =>
+            product.categoryId && product.categoryId === selectedCategory
+        );
+
+  let sortProducts =
+    selectedSort === "Default"
+      ? filteredProducts
+      : selectedSort === "Highest Price"
+      ? sortByHighest(filteredProducts, "price")
+      : sortByLowest(filteredProducts, "price");
+
+  useEffect(() => {
+    // Ensure that the current page is within valid bounds
+    const maxPage = Math.ceil(filteredProducts.length / productsPerPage);
+    if (page < 1 && maxPage > 0) {
+      setPage(1);
+    } else if (page > maxPage) {
+      setPage(maxPage);
+    }
+  }, [page, filteredProducts.length, productsPerPage]);
+
   return (
     <Box sx={{ display: "flex" }}>
       <CategoriesList
-        handleCategoryChange={(categoryId: number) =>
+        handleCategoryChange={(categoryId: string) =>
           setSelectedCategory(categoryId)
         }
       />
@@ -126,7 +128,7 @@ const ProductList = () => {
           >
             Sort by: {selectedSort}
           </Button>
-          {user && user.role === "admin" && <CreateProduct />}
+          {user && user.role === "Admin" && <CreateProduct />}
           <Menu
             id="basic-menu"
             anchorEl={anchorEl}
@@ -137,6 +139,7 @@ const ProductList = () => {
             <MenuItem
               onClick={() => {
                 setSelectedSort("Default");
+                handleClose();
               }}
             >
               Default
@@ -144,6 +147,7 @@ const ProductList = () => {
             <MenuItem
               onClick={() => {
                 setSelectedSort("Highest Price");
+                handleClose();
               }}
             >
               Highest Price
@@ -151,6 +155,7 @@ const ProductList = () => {
             <MenuItem
               onClick={() => {
                 setSelectedSort("Lowest Price");
+                handleClose();
               }}
             >
               Lowest Price
@@ -172,27 +177,34 @@ const ProductList = () => {
                 key={product.id}
                 sx={{ border: "1px solid black", padding: 2 }}
               >
-                <CardMedia
-                  component="img"
-                  alt="Product Images"
-                  image={product.images[1]}
-                  sx={{ width: "100%", height: "auto", display: "block" }}
-                />
-                <Typography variant="h6">{product.title}</Typography>
-                <Typography variant="body1">€{product.price}</Typography>
-                <CardActions>
-                  <Link component={RouterLink} to={`/products/${product.id}`}>
-                    <Button size="small">More details</Button>
-                  </Link>
-                  <Button
-                    size="small"
-                    onClick={() => {
-                      handleAddToCart(product);
-                    }}
-                  >
-                    Add to cart
-                  </Button>
-                </CardActions>
+                {product && ( // Add this check
+                  <>
+                    <CardMedia
+                      component="img"
+                      alt="Product Images"
+                      image={product.images[0]}
+                      sx={{ width: "100%", height: "auto", display: "block" }}
+                    />
+                    <Typography variant="h6">{product.name}</Typography>
+                    <Typography variant="body1">€{product.price}</Typography>
+                    <CardActions>
+                      <Link
+                        component={RouterLink}
+                        to={`/products/${product.id}`}
+                      >
+                        <Button size="small">More details</Button>
+                      </Link>
+                      <Button
+                        size="small"
+                        onClick={() => {
+                          handleAddToCart(product);
+                        }}
+                      >
+                        Add to cart
+                      </Button>
+                    </CardActions>
+                  </>
+                )}
               </Card>
             ))}
         </Box>

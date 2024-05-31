@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
+import axios, { AxiosError } from "axios";
 import { RootState } from "../redux/store";
 import { toast } from "react-toastify";
 import {
@@ -22,15 +23,15 @@ const Cart = () => {
     0
   );
 
-  const handleRemove = (id: number) => {
+  const handleRemove = (id: string) => {
     dispatch(removeFromCart(id));
   };
 
-  const handleIncrease = (id: number) => {
+  const handleIncrease = (id: string) => {
     dispatch(updateQuantity({ id, quantity: 1 }));
   };
 
-  const handleDecrease = (id: number) => {
+  const handleDecrease = (id: string) => {
     dispatch(updateQuantity({ id, quantity: -1 }));
   };
 
@@ -44,6 +45,33 @@ const Cart = () => {
         position: "bottom-left",
       });
       dispatch(clearCart());
+    }
+  };
+  const handleSubmitOrder = async () => {
+    const submitOrder = {
+      CreatedAt: new Date().toISOString(),
+      items: cartItems.map((item) => ({
+        productId: item.id,
+        quantity: item.quantity,
+        price: item.price,
+      })),
+    };
+    try {
+      const token = localStorage.getItem("access_token");
+      console.log(submitOrder);
+      const response = await axios.post(
+        "https://ecomshop.azurewebsites.net/api/v1/orders",
+        submitOrder,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      dispatch(clearCart());
+      console.log("Order submitted successfully!");
+    } catch (error: any) {
+      console.error("Error submitting order:", error.message);
     }
   };
 
@@ -108,7 +136,7 @@ const Cart = () => {
                   border: "1px solid #ccc",
                 }}
               >
-                {cart.title}
+                {cart.name}
               </td>
               <td
                 style={{
@@ -159,7 +187,7 @@ const Cart = () => {
           variant="contained"
           color="primary"
           sx={{ textTransform: "none", marginTop: "10px" }}
-          onClick={() => handleCheckout()}
+          onClick={() => handleSubmitOrder()}
         >
           Checkout
         </Button>

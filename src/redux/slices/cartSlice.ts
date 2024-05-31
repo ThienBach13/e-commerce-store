@@ -24,19 +24,19 @@ const cartSlice = createSlice({
       );
       if (existingItem) {
         existingItem.quantity += 1;
-        toast.info(`Quantity of "${action.payload.title}" increased`, {
+        toast.info(`Quantity of "${action.payload.name}" increased`, {
           position: "bottom-left",
         });
       } else {
         const tempProduct = { ...action.payload, quantity: 1 };
         state.cart.push(tempProduct);
-        toast.success(`Added "${action.payload.title}" to the cart`, {
+        toast.success(`Added "${action.payload.name}" to the cart`, {
           position: "bottom-left",
         });
         localStorage.setItem("cart", JSON.stringify(state.cart));
       }
     },
-    removeFromCart: (state, action: PayloadAction<number>) => {
+    removeFromCart: (state, action: PayloadAction<string>) => {
       state.cart = state.cart.filter((item) => item.id !== action.payload);
       toast.error("Removed item from the cart", { position: "bottom-left" });
     },

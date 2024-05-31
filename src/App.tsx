@@ -17,6 +17,8 @@ import Register from "./pages/userRegister";
 import Profile from "./pages/userProfile";
 import Box from "@mui/material/Box";
 import Footer from "./components/footer/footer";
+import UserOrder from "./pages/UserOrder";
+import AdminOrder from "./pages/AdminOrder";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
@@ -41,6 +43,8 @@ function App() {
               <Route path="/products" element={<Products />}></Route>
               <Route path="/products/:id" element={<ProductDetail />} />
               <Route path="/cart" element={<Cart />}></Route>
+              <Route path="/userOrder" element={<UserOrder />}></Route>
+              <Route path="/adminOrder" element={<AdminOrder />}></Route>
               <Route
                 path="/profile"
                 element={authenticate ? <Profile /> : <Navigate to="/login" />}

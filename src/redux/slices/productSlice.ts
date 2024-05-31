@@ -24,13 +24,17 @@ const initialState: ProductState = {
   error: null,
 };
 
-const url = "https://api.escuelajs.co/api/v1/products";
+const url = "https://ecomshop.azurewebsites.net/api/v1/products";
 
 export const createProductsAsync = createAsyncThunk(
   "createProductsAsync",
   async (newProduct: CreateProductType) => {
     try {
-      const response = await axios.post(url, newProduct);
+      const response = await axios.post(url, newProduct, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
       toast.success("Product added successfully!", {
         position: "top-right",
         autoClose: 2000,
@@ -54,10 +58,14 @@ export const updateProductAsync = createAsyncThunk(
     productId,
   }: {
     updateProduct: UpdateProductType;
-    productId: number;
+    productId: string;
   }) => {
     try {
-      const response = await axios.put(`${url}/${productId}`, updateProduct);
+      const response = await axios.put(`${url}/${productId}`, updateProduct, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
       toast.success("Product updated successfully!", {
         position: "top-right",
         autoClose: 2000,
@@ -76,9 +84,13 @@ export const updateProductAsync = createAsyncThunk(
 
 export const deleteProductAsync = createAsyncThunk(
   "deleteProductAsync",
-  async (productId: number) => {
+  async (productId: string) => {
     try {
-      const response = await axios.delete(`${url}/${productId}`);
+      const response = await axios.delete(`${url}/${productId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
       toast.success("Product removed successfully!", {
         position: "top-right",
         autoClose: 2000,
@@ -110,7 +122,7 @@ export const fetchAllProductsAsync = createAsyncThunk(
 
 export const fetchSingleProductAsync = createAsyncThunk(
   "fetchSingleProductAsync",
-  async (id: number) => {
+  async (id: string) => {
     try {
       const response = await axios.get<ProductType>(`${url}/${id}`);
       return response.data;

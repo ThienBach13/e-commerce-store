@@ -18,7 +18,7 @@ const DeleteProduct = () => {
   // Hooks
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { id } = useParams();
+  const { id } = useParams<{ id: string | undefined }>();
   const loading = useSelector((state: RootState) => state.products.loading);
   const error = useSelector((state: RootState) => state.products.error);
   const [openModal, setOpenModal] = useState(false);
@@ -29,7 +29,7 @@ const DeleteProduct = () => {
     onSubmit: async () => {
       try {
         navigate("/products");
-        await dispatch(deleteProductAsync(Number(id)));
+        await dispatch(deleteProductAsync(id as string));
         await dispatch(fetchAllProductsAsync());
       } catch (error) {
         return error;

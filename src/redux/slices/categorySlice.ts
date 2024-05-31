@@ -4,13 +4,13 @@ import axios, { AxiosError } from "axios";
 
 type InitialState = {
   categories: CategoryType[];
-  selectedCategory: number;
+  selectedCategory: string;
   loading: boolean;
   error?: string;
 };
 const initialState: InitialState = {
   categories: [],
-  selectedCategory: 0,
+  selectedCategory: "0",
   loading: false,
 };
 
@@ -19,7 +19,7 @@ export const fetchAllCategoriesAsync = createAsyncThunk(
   async () => {
     try {
       const res = await axios.get<CategoryType[]>(
-        `https://api.escuelajs.co/api/v1/categories`
+        `https://ecomshop.azurewebsites.net/api/v1/categories`
       );
       const data = res.data;
       return data;
@@ -34,7 +34,7 @@ const categorySlice = createSlice({
   name: "categories",
   initialState,
   reducers: {
-    setSelectedCategory: (state, action: PayloadAction<number>) => {
+    setSelectedCategory: (state, action: PayloadAction<string>) => {
       state.selectedCategory = action.payload;
     },
   },
@@ -43,7 +43,7 @@ const categorySlice = createSlice({
     builder.addCase(fetchAllCategoriesAsync.fulfilled, (state, action) => {
       if (!(action.payload instanceof Error)) {
         state.categories = [
-          { id: 0, name: "All", image: "https://i.imgur.com/cLBhSOG.png" },
+          { id: "0", name: "All", image: "https://i.imgur.com/cLBhSOG.png" },
           ...action.payload,
         ];
       }

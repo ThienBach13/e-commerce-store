@@ -24,21 +24,21 @@ const CreateProduct = () => {
   const categories = useSelector(
     (state: RootState) => state.categories.categories
   );
-  const categoryId = categories.length > 0 ? categories[1].id : 1;
+  const categoryId = categories.length > 0 ? categories[1].id : "1";
   const dispatch = useAppDispatch();
   const [openModal, setOpenModal] = useState(false);
 
   // Formik form setup
   const formik = useFormik({
     initialValues: {
-      title: "",
+      name: "",
       price: null,
       description: "",
       categoryId: categoryId,
       images: [""],
     },
     validationSchema: Yup.object({
-      title: Yup.string().required("Required"),
+      name: Yup.string().required("Required"),
       price: Yup.number()
         .positive("Price must be a positive number")
         .required("Required"),
@@ -112,17 +112,17 @@ const CreateProduct = () => {
           >
             {/* Form fields for creating a new product */}
             <TextField
-              id="title"
-              name="title"
-              label="Title"
+              id="name"
+              name="name"
+              label="Name"
               type="text"
-              value={formik.values.title}
+              value={formik.values.name}
               onChange={formik.handleChange}
               placeholder="Product name"
               variant="outlined"
               margin="normal"
-              error={formik.touched.title && Boolean(formik.errors.title)}
-              helperText={formik.touched.title && formik.errors.title}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
               sx={{ marginBottom: 1, width: "300px" }}
             />
 

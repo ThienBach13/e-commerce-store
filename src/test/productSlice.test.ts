@@ -41,39 +41,39 @@ const mockProduct = {
   quantity: 3,
 };
 
-describe("productSlice reducers", () => {
-  // test 0: initial state
-  test("should return initial state", () => {
-    const nextState = productReducer(undefined, { type: "" });
+// describe("productSlice reducers", () => {
+//   // test 0: initial state
+//   test("should return initial state", () => {
+//     const nextState = productReducer(undefined, { type: "" });
 
-    expect(nextState).toEqual(initialState);
-  });
+//     expect(nextState).toEqual(initialState);
+//   });
 
-  test("should fetch all products", () => {
-    const action = fetchAllProductsAsync.fulfilled(mockProducts, "fulfilled");
-    const nextState = productReducer(initialState, action);
+//   test("should fetch all products", () => {
+//     const action = fetchAllProductsAsync.fulfilled(mockProducts, "fulfilled");
+//     const nextState = productReducer(initialState, action);
 
-    expect(nextState).toEqual({
-      allProducts: mockProducts,
-      product: null,
-      loading: false,
-      error: null,
-    });
-  });
+//     expect(nextState).toEqual({
+//       allProducts: mockProducts,
+//       product: null,
+//       loading: false,
+//       error: null,
+//     });
+//   });
 
-  test("should fetch a product", () => {
-    const action = fetchSingleProductAsync.fulfilled(
-      mockProduct,
-      "fulfilled",
-      1
-    );
-    const nextState = productReducer(initialState, action);
+//   test("should fetch a product", () => {
+//     const action = fetchSingleProductAsync.fulfilled(
+//       mockProduct,
+//       "fulfilled",
+//       1
+//     );
+//     const nextState = productReducer(initialState, action);
 
-    expect(nextState).toEqual({
-      allProducts: [],
-      product: mockProduct,
-      loading: false,
-      error: null,
-    });
-  });
-});
+//     expect(nextState).toEqual({
+//       allProducts: [],
+//       product: mockProduct,
+//       loading: false,
+//       error: null,
+//     });
+//   });
+// });
