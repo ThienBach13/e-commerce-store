@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { RootState } from "../redux/store";
-import { toast } from "react-toastify";
 import {
   removeFromCart,
   clearCart,
@@ -35,18 +34,18 @@ const Cart = () => {
     dispatch(updateQuantity({ id, quantity: -1 }));
   };
 
-  const handleCheckout = () => {
-    if (cartItems.length === 0) {
-      toast.error("There are no products in the cart!", {
-        position: "bottom-left",
-      });
-    } else {
-      toast.success("Your order has been processed!", {
-        position: "bottom-left",
-      });
-      dispatch(clearCart());
-    }
-  };
+  // const handleCheckout = () => {
+  //   if (cartItems.length === 0) {
+  //     toast.error("There are no products in the cart!", {
+  //       position: "bottom-left",
+  //     });
+  //   } else {
+  //     toast.success("Your order has been processed!", {
+  //       position: "bottom-left",
+  //     });
+  //     dispatch(clearCart());
+  //   }
+  // };
   const handleSubmitOrder = async () => {
     const submitOrder = {
       CreatedAt: new Date().toISOString(),
@@ -68,6 +67,7 @@ const Cart = () => {
           },
         }
       );
+      console.log(response);
       dispatch(clearCart());
       console.log("Order submitted successfully!");
     } catch (error: any) {
