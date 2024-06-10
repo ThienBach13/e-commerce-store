@@ -54,7 +54,7 @@ export type UpdateQuantity = {
 
 export type Order = {
   id: string;
-  CreatedAt: Date;
+  createdAt: string;
   orderItems: [OrderItem];
 };
 export type OrderItem = {

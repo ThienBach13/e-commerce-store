@@ -28,7 +28,7 @@ const DeleteProduct = () => {
     initialValues: {},
     onSubmit: async () => {
       try {
-        navigate("/products");
+        navigate("/productManage");
         await dispatch(deleteProductAsync(id as string));
         await dispatch(fetchAllProductsAsync());
       } catch (error) {

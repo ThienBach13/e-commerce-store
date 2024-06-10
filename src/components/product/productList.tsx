@@ -3,7 +3,6 @@ import { fetchAllProductsAsync } from "../../redux/slices/productSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { authenticateUserAsync } from "../../redux/slices/userSlice";
 import { Link as RouterLink } from "react-router-dom";
-import CreateProduct from "./productCreate";
 import CategoriesList from "../category/categoriesList";
 import { Sort, ProductType } from "../../misc/types";
 import { RootState } from "../../redux/store";
@@ -128,7 +127,6 @@ const ProductList = () => {
           >
             Sort by: {selectedSort}
           </Button>
-          {user && user.role === "Admin" && <CreateProduct />}
           <Menu
             id="basic-menu"
             anchorEl={anchorEl}

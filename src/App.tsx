@@ -19,6 +19,7 @@ import Box from "@mui/material/Box";
 import Footer from "./components/footer/footer";
 import UserOrder from "./pages/UserOrder";
 import AdminOrder from "./pages/AdminOrder";
+import ProductManage from "./pages/ProductManage";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
               <Route path="/cart" element={<Cart />}></Route>
               <Route path="/userOrder" element={<UserOrder />}></Route>
               <Route path="/adminOrder" element={<AdminOrder />}></Route>
+              <Route path="/productManage" element={<ProductManage />}></Route>
               <Route
                 path="/profile"
                 element={authenticate ? <Profile /> : <Navigate to="/login" />}

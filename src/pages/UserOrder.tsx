@@ -18,7 +18,6 @@ const UserOrder = () => {
             },
           }
         );
-        console.log(response.data);
         setOrders(response.data);
       } catch (error: any) {
         console.error("Error fetching orders:", error.message);
@@ -26,6 +25,8 @@ const UserOrder = () => {
     };
     fetchOrders();
   }, []);
+
+  console.log(orders);
 
   return (
     <Box sx={{ padding: 2 }}>
@@ -38,7 +39,7 @@ const UserOrder = () => {
             Order ID: {order.id}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Date: {new Date(order.CreatedAt).toLocaleString()}
+            Date: {new Date(order.createdAt).toLocaleString()}
           </Typography>
           <Typography variant="body2">
             Total Items: {order.orderItems.length}

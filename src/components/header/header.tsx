@@ -289,6 +289,13 @@ const Header = () => {
                       >
                         <MenuItem>Manage Orders</MenuItem>
                       </Link>
+                      <Link
+                        component={RouterLink}
+                        to="/productManage"
+                        sx={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        <MenuItem>Manage Products</MenuItem>
+                      </Link>
                       <MenuItem onClick={handleLogout}>Log Out</MenuItem>
                     </div>
                   ) : (

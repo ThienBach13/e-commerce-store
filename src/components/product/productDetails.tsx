@@ -1,4 +1,4 @@
-import { useParams, Link as RouterLink, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
@@ -40,6 +40,9 @@ const ProductDetail: React.FC = () => {
 
   const handleAddToCart = (product: ProductType) => {
     cartDispatch(saveToCart(product));
+  };
+  const handleGoBack = () => {
+    window.history.back();
   };
 
   const categoryName =
@@ -135,21 +138,18 @@ const ProductDetail: React.FC = () => {
                 alignItems: "center",
               }}
             >
-              <Button
-                component={RouterLink}
-                to="/products"
-                variant="outlined"
-                color="primary"
-              >
+              <Button variant="outlined" color="primary" onClick={handleGoBack}>
                 Back
               </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => handleAddToCart(product)}
-              >
-                Add to cart
-              </Button>
+              {user && user.role === "Customer" && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleAddToCart(product)}
+                >
+                  Add to cart
+                </Button>
+              )}
             </Box>
           </Box>
         </Box>
