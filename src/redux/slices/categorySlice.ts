@@ -19,7 +19,7 @@ export const fetchAllCategoriesAsync = createAsyncThunk(
   async () => {
     try {
       const res = await axios.get<CategoryType[]>(
-        `https://ecomshop.azurewebsites.net/api/v1/categories`
+        `https://api.escuelajs.co/api/v1/categories`
       );
       const data = res.data;
       return data;

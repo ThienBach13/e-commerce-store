@@ -24,7 +24,7 @@ const initialState: ProductState = {
   error: null,
 };
 
-const url = "https://ecomshop.azurewebsites.net/api/v1/products";
+const url = "https://api.escuelajs.co/api/v1/products";
 
 export const createProductsAsync = createAsyncThunk(
   "createProductsAsync",
