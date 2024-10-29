@@ -19,6 +19,7 @@
 The application, using React TS and Redux Toolkit, creates a a fully functional e-commerce store.
 
 Deployment link: https://master--thien-e-commerce-store.netlify.app/
+Backend: https://github.com/ThienBach13/e-commerce-store-Backend
 
 ## Table of content
 
